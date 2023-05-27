@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>this is my test</head>
+<head>
+	<title>Retrieve Data from MySQL Database using AJAX</title>
+</head>
 <body>
-  <p>nice guy</p>
- </body>
+
+<h1>Retrieving Data from a MySQL Database using AJAX</h1>
+
+<table id="myTable">
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+	</tr>
+</table>
+
+<script>
+// AJAX request to fetch data from database
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		// Converting JSON string to JavaScript object
+		var obj = JSON.parse(this.responseText);
+ 		
+ 		// Loop through the data and populate the HTML table		
+		for(var i = 0; i < obj.length; i++) {
+			var row = document.createElement("tr");
+			var nameData = document.createElement("td");
+			var emailData = document.createElement("td");
+			
+			nameData.innerText = obj[i].name;
+			emailData.innerText = obj[i].email;
+
+			row.appendChild(nameData);
+			row.appendChild(emailData);
+
+			document.querySelector("#myTable").appendChild(row);
+		}
+	}
+};
+xhttp.open("GET", "connection.php", true);
+xhttp.send();
+</script>
+
+</body>
 </html>
-
-
-
